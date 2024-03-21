@@ -1,23 +1,34 @@
 const express = require("express");
+const connect = require("./config/connectDB");
+const Contact = require("./models/contact");
 
 const app = express();
+connect();
 
 const PORT = 4000;
 
 app.listen(PORT, () => console.log(`server runing on port ${PORT}`));
-const today = new Date();
-const day = today.getDay();
-const hours = today.getHours();
 
-console.log(day, hours);
-if (day >= 1 && day <= 5 && hours >= 9 && hours < 17) {
-  app.use(express.static("pubique"));
-  app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
-  });
-} else {
-  app.use(express.static("closed"));
-  app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/closed/index.html");
-  });
-}
+const addContact = new Contact({
+  firstName: "mohamed2",
+  lastName: "araysii",
+  email: "araysimohamedali04@gmail.com",
+  phoneNumber: 21815481,
+});
+//addContact.save();
+const multiContact = [
+  {
+    firstName: "islem",
+    lastName: "Baldi",
+    email: "islembaldi044@gmail.com",
+    phoneNumber: 94444190,
+  },
+  {
+    firstName: "islaam",
+    lastName: "baldyyyy",
+    email: "islemmohamedali045@gmail.com",
+    phoneNumber: 21815481,
+  },
+];
+//Contact.create(multiContact);
+Contact.findById("65fcc530c943f39efa4a61f0").then((data) => console.log(data));
